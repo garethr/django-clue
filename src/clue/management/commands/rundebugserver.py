@@ -1,0 +1,18 @@
+import os
+from django.core.management.base import BaseCommand, CommandError
+from django.core.management import call_command
+from django.conf import settings
+
+
+class Command(BaseCommand):
+    help = """ """
+        
+    def handle(self, *args, **options):
+      
+        settings.MIDDLEWARE_CLASSES += (
+          'clue.middleware.query.QueryMiddleware',
+          'clue.middleware.profiler.ProfileMiddleware',
+          'clue.middleware.template.TemplateMiddleware',
+        )
+      
+        call_command('runserver')
