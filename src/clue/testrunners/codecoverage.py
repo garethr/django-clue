@@ -2,10 +2,9 @@ import coverage
 import os
 from inspect import getmembers, ismodule
 
-from settings import EXCLUDE_FROM_COVERAGE
+from django.conf import settings
 from django.test.simple import run_tests as django_test_runner
 from django.db.models import get_app, get_apps
-
 
 def get_coverage_modules(app_module):
     """
@@ -32,13 +31,13 @@ def get_all_coverage_modules(app_module):
     mod_list = []
     for root, dirs, files in os.walk(app_dirpath):
         root_path = app_path + root[len(app_dirpath):].split(os.path.sep)[1:]
-        if app_path[0] not in EXCLUDE_FROM_COVERAGE:
+        if app_path[0] not in settings.EXCLUDE_FROM_COVERAGE:
             for file in files:
                 if file.lower().endswith('.py'):
                     mod_name = file[:-3].lower()
                     try:
-                        mod = __import__('.'.join(root_path + [mod_name]), {}, {},
-                            mod_name)
+                        mod = __import__('.'.join(root_path + [mod_name]),
+                            {}, {}, mod_name)
                     except ImportError:
                         pass
                     else:
@@ -54,7 +53,8 @@ def run_tests(test_labels, verbosity=1, interactive=True,
     """
     coverage.use_cache(0)
     coverage.start()
-    results = django_test_runner(test_labels, verbosity, interactive, extra_tests)
+    results = django_test_runner(test_labels, verbosity, interactive, 
+        extra_tests)
     coverage.stop()
 
     coverage_modules = []

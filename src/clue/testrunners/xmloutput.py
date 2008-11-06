@@ -1,29 +1,12 @@
-from django.test.simple import *
+import time, traceback, string
 from unittest import TestResult
-from xmlunit.unittest import _WritelnDecorator,XmlTextTestRunner as his_XmlTextTestRunner
-from django.utils.html import escape
-import time,traceback,string
 
+from xmlunit.unittest import _WritelnDecorator, XmlTextTestRunner as his_XmlTextTestRunner
+
+from django.test.simple import *
+from django.utils.html import escape
 
 def run_tests(test_labels, verbosity=1, interactive=True, extra_tests=[]):
-    """
-    Run the unit tests for all the test labels in the provided list.
-    Labels must be of the form:
-     - app.TestClass.test_method
-        Run a single specific test method
-     - app.TestClass
-        Run all the test methods in a given class
-     - app
-        Search for doctests and unittests in the named application.
-
-    When looking for tests, the test runner will look in the models and
-    tests modules for the application.
-    
-    A list of 'extra' tests may also be provided; these tests
-    will be added to the test suite.
-    
-    Returns the number of tests that failed.
-    """
     setup_test_environment()
     
     settings.DEBUG = False    
