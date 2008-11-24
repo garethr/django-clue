@@ -1,0 +1,21 @@
+Clue is a simple collection of useful middleware for Django. It currently
+provides a handful of new capabilities via a modified runserver command:
+
+./manage.py runclueserver
+
+Currently it supports three alternative views which are useful for
+performance tuning. All of these can be appended to any URL running 
+on the above mentioned development server.
+
+?query - provides a list of queries run to generate the page, including 
+a breakdown of slow queries and repeated queries
+
+?template - a list of all the templates used to render the page
+
+?prof - a process profile showing where you spend most of
+your time when rendering the view
+
+Credit for much of this work goes to others. The middleware was mainly
+based on code from Django Snippets, often tweaked and modified for use with
+Django 1.0 and with a few changes to the interface. The team at Global Radio 
+also have similar tools from which I took ideas.
