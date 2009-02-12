@@ -1,21 +1,52 @@
 Clue is a simple collection of useful middleware for Django. It currently
-provides a handful of new capabilities via a modified runserver command:
+provides a handful of new debugging capabilities via a modified runserver command or by loading a collection of middleware.
 
-./manage.py runclueserver
+h2. Installation
 
-Currently it supports three alternative views which are useful for
-performance tuning. All of these can be appended to any URL running 
-on the above mentioned development server.
+Clue wants to be installed somewhere on your python path. The quickest way of achieving that is the packaged setup.py file.
 
-?query - provides a list of queries run to generate the page, including 
-a breakdown of slow queries and repeated queries
+pre. python setup.py install
 
-?template - a list of all the templates used to render the page
+h2. Usage
 
-?prof - a process profile showing where you spend most of
-your time when rendering the view
+pre. ./manage.py runclueserver
+
+Alternatively you can add the middleware to your settings.py file, although it is advisable to avoid running these in a production environment.
+
+pre. if DEBUG:
+    settings.MIDDLEWARE_CLASSES += (
+        'clue.middleware.query.QueryMiddleware',
+        'clue.middleware.profiler.ProfileMiddleware',
+        'clue.middleware.template.TemplateMiddleware',
+    )
+
+Currently it supports three alternative views for each normal view, all of which are useful for performance tuning. All of these can be appended to any URL running on the above mentioned development server.
 
 Credit for much of this work goes to others. The middleware was mainly
 based on code from Django Snippets, often tweaked and modified for use with
 Django 1.0 and with a few changes to the interface. The team at Global Radio 
 also have similar tools from which I took ideas.
+
+h2. Alternative Views
+
+Simply append the specified query string arguments to a url and it should render useful information depending on which of the following you choose.
+
+h3. Query Analysis
+
+?query - provides a list of queries run to generate the page, including 
+a breakdown of slow queries and repeated queries
+
+h3. Template Loading
+
+?template - a list of all the templates used to render the page
+
+h3. Profiling
+
+?prof - a process profile showing where you spend most of
+your time when rendering the view
+
+h2. Licence
+
+Credits have been left in individual files. Except where otherwise stated the code is licensed as follows:
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
