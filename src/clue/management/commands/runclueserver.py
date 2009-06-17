@@ -11,6 +11,7 @@ class Command(BaseCommand):
           'clue.middleware.query.QueryMiddleware',
           'clue.middleware.profiler.ProfileMiddleware',
           'clue.middleware.template.TemplateMiddleware',
+          'clue.middleware.validate.HtmlValidatorMiddleware',
         )
       
         call_command('runserver')

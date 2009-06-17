@@ -18,9 +18,10 @@ pre. if DEBUG:
         'clue.middleware.query.QueryMiddleware',
         'clue.middleware.profiler.ProfileMiddleware',
         'clue.middleware.template.TemplateMiddleware',
+        'clue.middleware.validate.HtmlValidatorMiddleware',
     )
 
-Currently it supports three alternative views for each normal view, all of which are useful for performance tuning. All of these can be appended to any URL running on the above mentioned development server.
+Currently it supports four alternative views for each normal view, all of which are useful for performance tuning or general quality assurance. All of these can be appended to any URL running on the above mentioned development server.
 
 Credit for much of this work goes to others. The middleware was mainly
 based on code from Django Snippets, often tweaked and modified for use with
@@ -34,16 +35,20 @@ Simply append the specified query string arguments to a url and it should render
 h3. Query Analysis
 
 ?query - provides a list of queries run to generate the page, including 
-a breakdown of slow queries and repeated queries
+a breakdown of slow queries and repeated queries.
 
 h3. Template Loading
 
-?template - a list of all the templates used to render the page
+?template - a list of all the templates used to render the page.
 
 h3. Profiling
 
 ?prof - a process profile showing where you spend most of
-your time when rendering the view
+your time when rendering the view.
+
+h3. Markup validation
+
+?validate - A view which shows the markup validation errors on the page and where they occured. Requires the "Offline Validator":http://htmlhelp.com/tools/validator/offline/index.html.en command line utility.
 
 h2. Licence
 
